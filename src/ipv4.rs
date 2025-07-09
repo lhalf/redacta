@@ -15,7 +15,8 @@ mod tests {
     }
 
     #[test]
-    fn single_ipv4() {
+    fn only_ipv4() {
         assert_eq!("***********", redact_ipv4("192.168.0.1"));
+        assert_eq!("***********", redact_ipv4("192.168.0.2"));
     }
 }
