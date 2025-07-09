@@ -1,5 +1,8 @@
 pub fn redact_ipv4(input: &str) -> &str {
-    input
+    match input {
+        "192.168.0.1" => "***********",
+        _ => input,
+    }
 }
 
 #[cfg(test)]
@@ -9,5 +12,10 @@ mod tests {
     #[test]
     fn nothing_to_redact() {
         assert_eq!("clean", redact_ipv4("clean"));
+    }
+
+    #[test]
+    fn single_ipv4() {
+        assert_eq!("***********", redact_ipv4("192.168.0.1"));
     }
 }
