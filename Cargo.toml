@@ -1,6 +1,7 @@
 [package]
 name = "redact-logs"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2024"
+exclude = [".gitignore", "justfile", "/.github"]
 
 [dependencies]

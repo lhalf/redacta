@@ -1,3 +1,7 @@
+use crate::ipv4::redact_ipv4;
+
+mod ipv4;
+
 fn main() {
-    println!("Hello, world!");
+    redact_ipv4("");
 }
