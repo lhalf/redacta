@@ -5,3 +5,4 @@ edition = "2024"
 exclude = [".gitignore", "justfile", "/.github"]
 
 [dependencies]
+regex = { version = "1.11.1", default-features = false}
