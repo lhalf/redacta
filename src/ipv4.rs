@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 const IPV4_REGEX: &str =
     r"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
@@ -14,16 +16,14 @@ impl IPv4Redactor {
 }
 
 pub trait Redact {
-    fn redact(&self, input: &str) -> String;
+    fn redact<'a>(&self, input: &'a str) -> Cow<'a, str>;
 }
 
 impl Redact for IPv4Redactor {
-    fn redact(&self, input: &str) -> String {
-        self.regex
-            .replace_all(input, |captures: &regex::Captures| {
-                "*".repeat(captures[0].len())
-            })
-            .to_string()
+    fn redact<'a>(&self, input: &'a str) -> Cow<'a, str> {
+        self.regex.replace_all(input, |captures: &regex::Captures| {
+            "*".repeat(captures[0].len())
+        })
     }
 }
 
