@@ -1,5 +1,5 @@
 [package]
-name = "redact-logs"
+name = "redacta"
 version = "0.0.0"
 edition = "2024"
 exclude = [".gitignore", "justfile", "/.github"]
