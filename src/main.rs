@@ -1,10 +1,8 @@
-use crate::ipv4::{IPv4Redactor, Redact};
+use redacta::ipv4::{IPv4Redactor, Redact};
 use std::io::{BufRead, BufReader, Write};
 
-mod ipv4;
-
 fn main() {
-    let redactor = IPv4Redactor::new();
+    let redactor = IPv4Redactor::default();
     let stdin = std::io::stdin().lock();
     let mut stdout = std::io::stdout().lock();
 
@@ -25,14 +23,14 @@ fn redact_logs(
 
 #[cfg(test)]
 mod tests {
-    use crate::ipv4::IPv4Redactor;
     use crate::redact_logs;
+    use redacta::ipv4::IPv4Redactor;
 
     #[test]
     fn single_empty_line() {
         let input = vec![];
         let mut output = vec![];
-        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::new()).is_ok());
+        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::default()).is_ok());
         assert_eq!(input, output);
     }
 
@@ -42,7 +40,7 @@ mod tests {
     fn single_clean_line() {
         let input = b"clean\n".to_vec();
         let mut output = vec![];
-        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::new()).is_ok());
+        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::default()).is_ok());
         assert_eq!(input, output);
     }
 
@@ -50,7 +48,7 @@ mod tests {
     fn multiple_clean_lines() {
         let input = b"clean\nline\nagain\n".to_vec();
         let mut output = vec![];
-        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::new()).is_ok());
+        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::default()).is_ok());
         assert_eq!(input, output);
     }
 }

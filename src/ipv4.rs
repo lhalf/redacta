@@ -7,8 +7,8 @@ pub struct IPv4Redactor {
     regex: regex::Regex,
 }
 
-impl IPv4Redactor {
-    pub fn new() -> Self {
+impl Default for IPv4Redactor {
+    fn default() -> Self {
         Self {
             regex: regex::Regex::new(IPV4_REGEX).expect("this regex is valid"),
         }
@@ -33,7 +33,7 @@ mod tests {
 
     #[test]
     fn nothing_to_redact() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!("clean", redactor.redact("clean"));
         assert_eq!("full stop.", redactor.redact("full stop."));
         assert_eq!(
@@ -44,14 +44,14 @@ mod tests {
 
     #[test]
     fn only_ipv4() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!("***********", redactor.redact("192.168.0.1"));
         assert_eq!("***********", redactor.redact("192.168.0.2"));
     }
 
     #[test]
     fn single_ipv4_in_sentence() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!(
             "Sentence with *********** here.",
             redactor.redact("Sentence with 192.168.0.1 here.")
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn multiple_ipv4s_in_sentence() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!(
             "*************** and *********** here.",
             redactor.redact("255.255.255.255 and 192.168.0.1 here.")
@@ -69,7 +69,7 @@ mod tests {
 
     #[test]
     fn single_nested_ipv4() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!(
             "Sentence with***********nested.",
             redactor.redact("Sentence with192.168.0.1nested.")
@@ -78,7 +78,7 @@ mod tests {
 
     #[test]
     fn multiple_nested_ipv4s() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!(
             "***************and***********.",
             redactor.redact("255.255.255.255and192.168.0.1.")
@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn multiple_back_to_back_ipv4s() {
-        let redactor = IPv4Redactor::new();
+        let redactor = IPv4Redactor::default();
         assert_eq!(
             "************************************************",
             redactor.redact("255.255.255.255192.168.0.1172.168.1.1255.1.255.1")
