@@ -11,12 +11,14 @@ fn main() {
 }
 
 fn redact_logs(
-    input: impl BufRead,
+    mut input: impl BufRead,
     output: &mut impl Write,
     redactor: &impl Redact,
-) -> std::io::Result<()> {
-    for line in input.lines() {
-        writeln!(output, "{}", redactor.redact(&line?))?;
+) -> anyhow::Result<()> {
+    let mut buffer = Vec::with_capacity(1024);
+    while input.read_until(b'\n', &mut buffer)? != 0 {
+        write!(output, "{}", redactor.redact(std::str::from_utf8(&buffer)?))?;
+        buffer.clear();
     }
     Ok(())
 }
@@ -34,11 +36,17 @@ mod tests {
         assert_eq!(input, output);
     }
 
-    // TODO: handle single line without newline
+    #[test]
+    fn single_line_without_newline() {
+        let input = b"no newline".to_vec();
+        let mut output = vec![];
+        assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::default()).is_ok());
+        assert_eq!(input, output);
+    }
 
     #[test]
-    fn single_clean_line() {
-        let input = b"clean\n".to_vec();
+    fn single_line_with_newline() {
+        let input = b"newline\n".to_vec();
         let mut output = vec![];
         assert!(redact_logs(&input[..], &mut output, &IPv4Redactor::default()).is_ok());
         assert_eq!(input, output);
