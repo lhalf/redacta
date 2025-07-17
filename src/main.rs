@@ -7,7 +7,7 @@ use std::io::{BufRead, BufReader, Write};
 #[command(version, about, long_about = None)]
 struct Args {
     /// Enable IPv4 redaction
-    #[arg(short, long)]
+    #[arg(long)]
     ipv4: bool,
 }
 

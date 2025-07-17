@@ -1,5 +1,8 @@
 set shell := ["bash", "-euc"]
 
+build:
+    cargo build --release
+
 check:
     cargo fmt --check --all
     cargo clippy --all-targets -- -Dwarnings
