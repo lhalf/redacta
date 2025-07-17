@@ -1,3 +1,4 @@
+use crate::redact::Redact;
 use std::borrow::Cow;
 
 const IPV4_REGEX: &str =
@@ -13,10 +14,6 @@ impl Default for IPv4Redactor {
             regex: regex::Regex::new(IPV4_REGEX).expect("this regex is valid"),
         }
     }
-}
-
-pub trait Redact {
-    fn redact<'a>(&self, input: &'a str) -> Cow<'a, str>;
 }
 
 impl Redact for IPv4Redactor {

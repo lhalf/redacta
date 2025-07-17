@@ -1,5 +1,6 @@
 use clap::Parser;
-use redacta::ipv4::{IPv4Redactor, Redact};
+use redacta::ipv4::IPv4Redactor;
+use redacta::redact::Redact;
 use std::borrow::Cow;
 use std::io::{BufRead, BufReader, Write};
 
