@@ -26,7 +26,8 @@ impl Redact for IPv4Redactor {
 
 #[cfg(test)]
 mod tests {
-    use super::{IPv4Redactor, Redact};
+    use super::IPv4Redactor;
+    use crate::redact::Redact;
 
     #[test]
     fn nothing_to_redact() {
