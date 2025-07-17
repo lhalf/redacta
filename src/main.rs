@@ -49,7 +49,7 @@ fn redact_logs(
             }
         }
 
-        write!(output, "{}", line)?;
+        write!(output, "{line}")?;
         buffer.clear();
     }
 
