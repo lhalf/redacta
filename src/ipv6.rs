@@ -60,4 +60,51 @@ mod tests {
             redactor.redact("2001:0db8:85a3:0000:0000:8a2e:0370:7334")
         );
     }
+
+    #[test]
+    fn single_ipv6_in_sentence() {
+        let redactor = IPv6Redactor::default();
+        assert_eq!(
+            "Sentence with ************************************** here.",
+            redactor.redact("Sentence with 2001:db8:3333:4444:5555:6666:7777:8888 here.")
+        );
+    }
+
+    #[test]
+    fn multiple_ipv6s_in_sentence() {
+        let redactor = IPv6Redactor::default();
+        assert_eq!(
+            "*** and ************************************** here.",
+            redactor.redact("::1 and 2001:db8:3333:4444:5555:6666:7777:8888 here.")
+        );
+    }
+
+    #[test]
+    fn single_nested_ipv6() {
+        let redactor = IPv6Redactor::default();
+        assert_eq!(
+            "Sentence with**************************************nested.",
+            redactor.redact("Sentence with2001:db8:3333:4444:5555:6666:7777:8888nested.")
+        );
+    }
+
+    #[test]
+    fn multiple_nested_ipv6s() {
+        let redactor = IPv6Redactor::default();
+        assert_eq!(
+            "**************************************and**************************************.",
+            redactor.redact(
+                "2001:db8:3333:4444:5555:6666:7777:8888and2001:db8:3333:4444:5555:6666:7777:8888."
+            )
+        );
+    }
+
+    #[test]
+    fn multiple_back_to_back_ipv6s() {
+        let redactor = IPv6Redactor::default();
+        assert_eq!(
+            "******************************************************************************************************************",
+            redactor.redact("2001:db8:3333:4444:5555:6666:7777:88882001:db8:3333:4444:5555:6666:7777:88882001:db8:3333:4444:5555:6666:7777:8888")
+        );
+    }
 }
