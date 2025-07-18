@@ -1,5 +1,6 @@
 use clap::Parser;
 use redacta::ipv4::IPv4Redactor;
+use redacta::ipv6::IPv6Redactor;
 use redacta::redact::Redact;
 use std::borrow::Cow;
 use std::io::{BufRead, BufReader, Write};
@@ -10,6 +11,9 @@ struct Args {
     /// Enable IPv4 redaction
     #[arg(long)]
     ipv4: bool,
+    /// Enable IPv6 redaction
+    #[arg(long)]
+    ipv6: bool,
 }
 
 fn main() {
@@ -19,6 +23,10 @@ fn main() {
 
     if args.ipv4 {
         redactors.push(Box::new(IPv4Redactor::default()))
+    }
+
+    if args.ipv6 {
+        redactors.push(Box::new(IPv6Redactor::default()))
     }
 
     let stdin = std::io::stdin().lock();
