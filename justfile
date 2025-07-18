@@ -9,3 +9,6 @@ check:
 
 test:
     cargo test
+
+package: build
+    tar -czf target/redacta.tar.gz --directory target/release redacta

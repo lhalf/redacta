@@ -13,7 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v3
+
       - name: check
         run: just check
+
       - name: test
         run: just test
+
+      - name: package
+        run: just package
+        
+      - name: release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: target/redacta.tar.gz
