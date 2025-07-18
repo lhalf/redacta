@@ -2,6 +2,10 @@
 name = "redacta"
 version = "0.0.0"
 edition = "2024"
+description = "Command line tool for redacting information from text."
+keywords = ["cargo-subcommand", "tool"]
+license = "MIT"
+repository = "https://github.com/lhalf/redacta"
 exclude = [".gitignore", "justfile", "/.github"]
 
 [dependencies]
