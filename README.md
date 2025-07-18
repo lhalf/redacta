@@ -1,5 +1,7 @@
 # redacta
 
+[![crates.io](https://img.shields.io/crates/v/redacta)](https://crates.io/crates/redacta)
+[![GitHub Release](https://img.shields.io/github/v/release/lhalf/redacta)](https://github.com/lhalf/redacta/releases)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lhalf/redacta/on_commit.yml)
 [![MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
@@ -10,7 +12,19 @@ Command line tool for redacting information from text.
 
 ## Install
 
+Download from [releases](https://github.com/lhalf/redacta/releases) then:
+```bash
+tar -xvzf redacta.tar.gz
+```
+
+Or install via cargo:
+```bash
+cargo install redacta
+```
+
 ## Usage
+
+Takes logs via stdin and forwards redacted logs to stdout.
 
 ```
 $ redacta --help
@@ -24,3 +38,8 @@ Options:
 ```
 
 ## Example
+
+```bash
+$ echo "Look at my 192.168.0.1 IP!" | redacta --ipv4
+Look at my *********** IP!
+```
