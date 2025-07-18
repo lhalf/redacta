@@ -2,7 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/redacta)](https://crates.io/crates/redacta)
 [![GitHub Release](https://img.shields.io/github/v/release/lhalf/redacta)](https://github.com/lhalf/redacta/releases)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lhalf/redacta/on_commit.yml)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lhalf/redacta/on_commit.yml)](https://github.com/lhalf/redacta/actions/workflows/on_commit.yml)
 [![MIT](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 Command line tool for redacting information from text.
