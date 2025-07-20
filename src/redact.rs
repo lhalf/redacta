@@ -1,8 +1,7 @@
-use std::borrow::Cow;
 use std::io::{BufRead, Write};
 
 pub trait Redact {
-    fn redact<'a>(&self, input: &'a str) -> Cow<'a, str>;
+    fn redact(&self, input: &mut [u8]);
 }
 
 pub fn redact_logs(
@@ -11,23 +10,13 @@ pub fn redact_logs(
     redactors: &[Box<dyn Redact>],
 ) -> anyhow::Result<()> {
     let mut buffer = Vec::with_capacity(1024);
-    let mut owned_buffer = String::with_capacity(1024);
 
     while input.read_until(b'\n', &mut buffer)? != 0 {
-        let mut line = std::str::from_utf8(&buffer)?;
-
         for redactor in redactors {
-            match redactor.redact(line) {
-                Cow::Owned(redacted) => {
-                    owned_buffer.clear();
-                    owned_buffer.push_str(&redacted);
-                    line = &owned_buffer;
-                }
-                _ => continue,
-            }
+            redactor.redact(&mut buffer);
         }
 
-        write!(output, "{line}")?;
+        output.write_all(&buffer)?;
         buffer.clear();
     }
 

@@ -1,30 +1,39 @@
 use crate::redact::Redact;
-use std::borrow::Cow;
+
+pub fn redact(regex: &regex::bytes::Regex, input: &mut [u8]) {
+    let ranges: Vec<(usize, usize)> = regex
+        .find_iter(input)
+        .map(|m| (m.start(), m.end()))
+        .collect();
+
+    ranges
+        .into_iter()
+        .for_each(|(start, end)| input[start..end].fill(b'*'));
+}
 
 #[derive(Debug)]
 pub struct RegexRedactor {
-    regex: regex::Regex,
+    regex: regex::bytes::Regex,
 }
 
 impl RegexRedactor {
     pub fn try_from(regex: &str) -> Result<Self, anyhow::Error> {
         Ok(Self {
-            regex: regex::Regex::new(regex).map_err(|_| anyhow::anyhow!("invalid regex"))?,
+            regex: regex::bytes::Regex::new(regex).map_err(|_| anyhow::anyhow!("invalid regex"))?,
         })
     }
 }
 
 impl Redact for RegexRedactor {
-    fn redact<'a>(&self, input: &'a str) -> Cow<'a, str> {
-        self.regex.replace_all(input, |captures: &regex::Captures| {
-            "*".repeat(captures[0].len())
-        })
+    fn redact(&self, input: &mut [u8]) {
+        redact(&self.regex, input);
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::RegexRedactor;
+    use crate::assert_redacts;
     use crate::redact::Redact;
 
     #[test]
@@ -37,13 +46,19 @@ mod tests {
 
     #[test]
     fn nothing_to_redact() {
-        let redactor = RegexRedactor::try_from("^hello").unwrap();
-        assert_eq!("clean", redactor.redact("clean"));
+        assert_redacts!(
+            RegexRedactor::try_from("^hello").unwrap(),
+            b"clean",
+            b"clean"
+        );
     }
 
     #[test]
     fn matching_regex() {
-        let redactor = RegexRedactor::try_from("^hello").unwrap();
-        assert_eq!("***** world!", redactor.redact("hello world!"));
+        assert_redacts!(
+            RegexRedactor::try_from("^hello").unwrap(),
+            b"hello world!",
+            b"***** world!"
+        );
     }
 }

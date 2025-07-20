@@ -10,7 +10,7 @@ check:
 test: unit-test perf-test
 
 unit-test:
-    cargo test --bins
+    cargo test --lib
 
 perf-test: build
     cargo test --test "performance" -- --nocapture --color always
