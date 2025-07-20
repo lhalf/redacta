@@ -7,8 +7,13 @@ check:
     cargo fmt --check --all
     cargo clippy --all-targets -- -Dwarnings
 
-test:
-    cargo test
+test: unit-test perf-test
+
+unit-test:
+    cargo test --bins
+
+perf-test: build
+    cargo test --test "performance" -- --nocapture --color always
 
 package: build
     tar -czf target/redacta.tar.gz --directory target/release redacta

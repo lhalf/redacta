@@ -18,8 +18,11 @@ jobs:
       - name: check
         run: just check
 
-      - name: test
-        run: just test
+      - name: unit-test
+        run: just unit-test
+
+      - name: perf-test
+        run: just perf-test
 
       - name: package
         run: just package

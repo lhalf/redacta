@@ -12,3 +12,7 @@ exclude = [".gitignore", "justfile", "/.github"]
 anyhow = { version = "1.0.98", default-features = false}
 regex = { version = "1.11.1", default-features = false}
 clap = { version = "4.5.41", default-features = false, features = ["std", "derive", "help", "usage"] }
+
+[dev-dependencies]
+fastrand = { version = "2.3.0", default-features = false, features = ["std"]}
+colored = { version = "*", default-features = false }
