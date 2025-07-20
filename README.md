@@ -24,7 +24,7 @@ cargo install redacta
 
 ## Usage
 
-Takes logs via stdin and forwards redacted logs to stdout.
+Takes text via stdin and forwards redacted text to stdout.
 
 ```
 $ redacta --help
