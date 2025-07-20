@@ -28,13 +28,16 @@ Takes text via stdin and forwards redacted text to stdout.
 
 ```
 $ redacta --help
+Command line tool for redacting information from text.
+
 Usage: redacta [OPTIONS]
 
 Options:
-      --ipv4     Enable IPv4 redaction
-      --ipv6     Enable IPv6 redaction
-  -h, --help     Print help
-  -V, --version  Print version
+      --ipv4           Enable IPv4 redaction
+      --ipv6           Enable IPv6 redaction
+  -r, --regex <REGEX>  Regex redaction
+  -h, --help           Print help
+  -V, --version        Print versio
 ```
 
 ## Example
