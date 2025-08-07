@@ -12,9 +12,8 @@ Command line tool for redacting information from text.
 
 ## Install
 
-Download from [releases](https://github.com/lhalf/redacta/releases) then:
 ```bash
-tar -xvzf redacta.tar.gz
+curl -sS https://raw.githubusercontent.com/lhalf/redacta/main/install.sh | sh
 ```
 
 Or install via cargo:
@@ -43,4 +42,14 @@ Options:
 ```bash
 $ echo "Look at my 192.168.0.1 IP!" | redacta --ipv4
 Look at my *********** IP!
+```
+
+```bash
+$ echo "No really, look at my 2001:db8:3333:4444:5555:6666:7777:8888 IP!" | redacta --ipv6
+No really, look at my ************************************** IP!
+```
+
+```bash
+$ echo "Okay, but you won't example.server.com like it..." | redacta --fqdn
+Okay, but you won't ****************** like it...
 ```
