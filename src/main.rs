@@ -1,4 +1,5 @@
 use clap::Parser;
+use redacta::fqdn::FqdnRedactor;
 use redacta::ipv4::IPv4Redactor;
 use redacta::ipv6::IPv6Redactor;
 use redacta::redact::{Redact, redact_logs};
@@ -14,6 +15,9 @@ struct Args {
     /// Enable IPv6 redaction
     #[arg(long)]
     ipv6: bool,
+    /// Enable FQDN redaction
+    #[arg(long)]
+    fqdn: bool,
     /// Regex redaction
     #[arg(short, long)]
     regex: Option<String>,
@@ -42,6 +46,10 @@ fn enabled_redactors(args: &Args) -> anyhow::Result<Vec<Box<dyn Redact>>> {
 
     if args.ipv6 {
         redactors.push(Box::new(IPv6Redactor::default()));
+    }
+
+    if args.fqdn {
+        redactors.push(Box::new(FqdnRedactor::default()));
     }
 
     if let Some(regex) = &args.regex {
