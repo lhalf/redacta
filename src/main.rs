@@ -7,7 +7,10 @@ use redacta::regex::RegexRedactor;
 use std::io::BufReader;
 
 #[derive(Parser)]
-#[command(disable_help_subcommand = true, override_usage = "<STDIN> | redacta [OPTIONS]")]
+#[command(
+    disable_help_subcommand = true,
+    override_usage = "<STDIN> | redacta [OPTIONS]"
+)]
 struct Args {
     /// Enable IPv4 redaction
     #[arg(long)]
