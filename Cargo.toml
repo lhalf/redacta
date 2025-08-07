@@ -15,4 +15,4 @@ regex = { version = "1.11.1", default-features = false, features = ["unicode-cas
 clap = { version = "4.5.41", default-features = false, features = ["std", "derive", "help", "usage"] }
 
 [dev-dependencies]
-colored = { version = "*", default-features = false }
+colored = { version = "3.0.0", default-features = false }
