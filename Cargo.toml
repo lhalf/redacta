@@ -1,6 +1,6 @@
 [package]
 name = "redacta"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2024"
 description = "Command line tool for redacting information from text."
 keywords = ["tool", "redact"]
