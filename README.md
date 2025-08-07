@@ -50,6 +50,6 @@ No really, look at my ************************************** IP!
 ```
 
 ```bash
-$ echo "Okay, but you won't example.server.com like it..." | redacta --fqdn
-Okay, but you won't ****************** like it...
+$ echo "Okay, it is example.server.com here..." | redacta --fqdn
+Okay, it is ****************** here...
 ```
